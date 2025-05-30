@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quill Quest - Fulfillment</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+    }
+
+    header {
+      background-color: #f8f5f0;
+      padding: 10px 20px;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-section img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .logo-section span {
+      font-size: 24px;
+      font-weight: bold;
+      color: #3b2f2f;
+    }
+
+    .steps-nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .steps-nav div {
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .steps-nav img {
+      height: 24px;
+      margin-bottom: 3px;
+    }
+
+    .main-container {
+      display: flex;
+      padding: 25px;
+    }
+
+    .form-section {
+      flex: 2;
+      padding-right: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: goldenrod;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .summary-section {
+      flex: 1;
+      border: 1px solid #ccc;
+      padding: 25px;
+      background-color: #fdfdfd;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-images img {
+      width: 100%;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+
+    .email-signup {
+      text-align: center;
+      background-color: #f8f5f0;
+      padding: 20px;
+    }
+
+    .email-signup input {
+      width: 250px;
+      padding: 8px;
+      margin-right: 10px;
+    }
+
+    footer {
+      background-color: #2f1c0b;
+      color: white;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    footer .footer-columns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    footer .column {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px;
+    }
+
+    footer h4 {
+      color: #e0c27a;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid #555;
+      padding-top: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      .footer-columns {
+        flex-direction: column;
+      }
+      .steps-nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <!-- Logo -->
+    <div class="logo-section">
+      <img src="" alt="Quill Quest Logo">
+      <span>QUILL QUEST</span>
+    </div>
+
+    <!-- Steps Navigation -->
+    <div class="steps-nav">
+      <div>
+        <img src="https://img.icons8.com/ios-filled/24/000000/shipped.png" alt="Fulfillment">
+        <div style="color: goldenrod; font-weight: bold;">FULFILLMENT</div>
+      </div>
+      <div>
+        <img src="https://img.icons8.com/ios-filled/24/000000/card-in-use.png" alt="Payment">
+        <div>PAYMENT</div>
+      </div>
+      <div>
+        <img src="https://img.icons8.com/ios-filled/24/000000/ok.png" alt="Confirmation">
+        <div>CONFIRMATION</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="main-container">
+  <div class="form-section">
+    <h2>Shipping Details</h2>
+    <form>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" required>
+      </div>
+      <div class="form-group">
+        <label>First name *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Last name *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Country *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Province *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>City/Municipality *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Barangay *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Street Address *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Postal Code *</label>
+        <input type="text" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" required>
+      </div>
+      <div class="form-group">
+        <label>Additional Instructions</label>
+        <textarea></textarea>
+      </div>
+      <div class="form-group">
+        <label>Shipping Method</label>
+        <select>
+          <option>Standard</option>
+          <option>Express</option>
+        </select>
+      </div>
+      <button type="submit">PROCEED TO BILLING</button>
+    </form>
+  </div>
+
+  <div>
+    <div class="summary-section">
+      <h3>Order Summary</h3>
+      <img src="https://via.placeholder.com/100" alt="Book">
+      <p><strong>Product:</strong> Reference Book</p>
+      <p><strong>Qty:</strong> 1</p>
+      <p><strong>Subtotal:</strong> ₱XXX.XX</p>
+      <hr>
+      <p><strong>Order Total:</strong> ₱XXX.XX</p>
+    </div>
+    <div class="sidebar-images">
+      <img src="https://via.placeholder.com/300x100?text=Banner+1" alt="Banner 1">
+      <img src="https://via.placeholder.com/300x100?text=Banner+2" alt="Banner 2">
+      <img src="https://via.placeholder.com/300x100?text=Banner+3" alt="Banner 3">
+    </div>
+  </div>
+</div>
+
+<div class="email-signup">
+  <h4>Sign up to receive email updates</h4>
+  <input type="email" placeholder="Enter your email address">
+  <button>Subscribe</button>
+</div>
+
+<footer>
+  <div class="footer-columns">
+    <div class="column">
+      <h4>SERVICES</h4>
+      <a href="#">Free Shipping</a>
+      <a href="#">Discount</a>
+      <a href="#">Cash on Delivery</a>
+    </div>
+    <div class="column">
+      <h4>LINKS</h4>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="column">
+      <h4>PAYMENT METHODS</h4>
+      <a href="#">GCash</a>
+      <a href="#">PayMaya</a>
+      <a href="#">Bank Transfer</a>
+    </div>
+    <div class="column">
+      <h4>FOLLOW US</h4>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; QUILL QUEST 2025 — All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

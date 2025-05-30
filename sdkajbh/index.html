@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quill Quest Bookstore</title>
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #b99e66;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .logo img {
+            height: 75px;
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            width: 250px;
+            outline: none;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .user-actions a {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Style for the cart icon with count */
+        .cart-icon-wrapper {
+            position: relative;
+            display: inline-block; /* To make the badge position relative to it */
+        }
+
+        #cart-item-count {
+            position: absolute;
+            top: -5px; /* Adjust as needed */
+            right: -5px; /* Adjust as needed */
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+            display: none; /* Hide when cart is empty */
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+        .main-navigation {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .main-navigation ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-navigation li {
+            position: relative;
+        }
+
+        .main-navigation a {
+            display: block;
+            padding: 15px 25px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .main-navigation a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-indicator::after {
+            content: "▼";
+            font-size: 8px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            text-transform: none;
+            font-weight: normal;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .main-navigation li:hover .dropdown-content {
+            display: block;
+        }
+        
+        .hero-banner {
+            display: flex;
+            background-color: #ffc947;
+            height: 300px;
+        }
+        
+        .hero-image {
+            flex: 1;
+            background-image: url('/api/placeholder/400/320');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 30px;
+        }
+        
+        .hero-content h1 {
+            color: #fff;
+            font-size: 42px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        .hero-content h2 {
+            color: #fff;
+            font-size: 52px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .section-heading {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .book-categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .category {
+            width: 200px;
+            text-align: center;
+        }
+        
+        .category img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .category-label {
+            background-color: #444;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        .featured-author {
+            background-color: #444;
+            color: white;
+            padding: 30px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        
+        .author-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-details {
+            flex: 1;
+        }
+        
+        .author-details h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .author-details p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .author-details a {
+            display: inline-block;
+            background-color: #b99e66;
+            color: white;
+            padding: 5px 15px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        .services {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+        
+        .service {
+            justify-content: space-around;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .service-icon {
+            font-size: 30px;
+            color: #333;
+        }
+        
+        .service-details {
+            font-size: 12px;
+        }
+        
+        .service-details h4 {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .newsletter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 15px;
+        }
+        
+        .newsletter p {
+            font-weight: bolder;
+            font-size: 35px;
+        }
+        
+        .newsletter input {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+        .newsletter button {
+            background-color: #b99e66;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+
+        footer {
+            background-color: #29200d;
+            color: white;
+            padding: 40px 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-logo {
+            color: #b99e66;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .footer-contact {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            font-size: 12px;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links .payment-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .footer-links .payment-icon {
+            background: white;
+            border-radius: 3px;
+            padding: 3px;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: #333;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .copyright {
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            background-color: #b99e66;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 40px;
+            border: 1px solid #888;
+            width: 400px;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+        }
+
+        .modal h2 {
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #b99e66;
+        }
+
+        .modal-btn {
+            background-color: #000;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .modal-btn:hover {
+            background-color: #333;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            color: #666;
+            display: block; /* Ensure it's visible */
+        }
+        
+        /* === NEW: Blue color for modal footer links === */
+        .modal-footer a {
+            color: #0000FF; /* Pure blue */
+            text-decoration: none;
+            font-weight: bold;
+        }
+        /* ============================================== */
+
+        .modal-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        /* --- New styles for product display and add to cart --- */
+        .product-section {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-card p {
+            font-size: 16px;
+            color: #b99e66;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #b99e66;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #a08c5a;
+        }
+
+        /* Basic Cart Modal */
+        #cartModal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1001; /* Higher than login/signup modal */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cartModal .modal-content {
+            width: 600px; /* Wider for cart items */
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        #cart-items-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        #cart-items-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        #cart-items-list li:last-child {
+            border-bottom: none;
+        }
+
+        #cart-items-list .item-info {
+            display: flex;
+            align-items: center;
+        }
+        #cart-items-list .item-info img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+        #cart-items-list .item-name {
+            font-weight: bold;
+        }
+        #cart-items-list .item-price {
+            color: #b99e66;
+            font-weight: bold;
+        }
+
+        #cart-total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        #checkout-btn {
+            background-color: #008000; /* Green for checkout */
+            margin-top: 20px;
+            padding: 12px 25px;
+        }
+        #checkout-btn:hover {
+            background-color: #006400;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Quill Quest Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="user-actions">
+            <a href="#" id="login-register-link">LOG IN/REGISTER</a>
+            <a href="#">HELP</a>
+            <a href="#">👤</a>
+            <a href="cart.html">
+                🛒
+                <span id="cart-item-count">0</span>
+            </a>
+        </div>
+    </header>
+    
+    <nav class="main-navigation">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li>
+                <a href="#" class="dropdown-indicator">BOOKS</a>
+                    <div class="dropdown-content">
+                        <a href="sraz.html">EDUCATIONAL BOOKS</a>
+                        <a href="ficbook.html">FICTIONAL BOOKS</a>
+                        <a href="REFERENCE BOOKS.html">REFERENCE BOOKS</a>
+                </div>
+                <li>
+                    <a href="#" class="dropdown-indicator">SUPPLIES</a>
+                    <div class="dropdown-content">
+                        <a href="arts and craft.html">ARTS AND CRAFTS</a>
+                        <a href="pens.html">PENS</a>
+                        <a href="coloring.html">COLORING MATERIALS</a>
+                        <a href="written.html">WRITTEN MATERIALS</a>
+                    </div>
+                </li>
+            <li><a href="blogs.html">BLOG</a></li>
+            <li><a href="about.html">ABOUT US</a></li>
+        </ul>
+    </nav>
+    
+    <div class="hero-banner">
+        <div class="hero-image">
+            <img src="img/edukid.png" alt="Children reading books" height="300" width="1691">
+        </div>
+        <div class="hero-content">
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </div>
+    
+    <h2 class="section-heading">NEW & FEATURES</h2>
+<div class="book-categories">
+    <div class="category">
+        <a href="sraz.html" class="category-link">
+            <img src="img/edubook.png" alt="Educational Books" class="category-image">
+            <div class="category-label">Educational Books</div>
+        </a>
+    </div>
+    <div class="category">
+        <a href="ficbook.html" class="category-link">
+            <img src="img/ficbook.png" alt="Fictional Books" class="category-image">
+            <div class="category-label">Fictional Books</div>
+        </a>
+    </div>
+    <div class="category">
+        <a href="REFERENCE BOOKS.html" class="category-link">
+            <img src="img/refbook.png" alt="Reference Books" class="category-image">
+            <div class="category-label">Reference Books</div>
+        </a>
+    </div>
+    <div class="category">
+        <a href="arts and craft.html" class="category-link">
+            <img src="img/schoolsup.png" alt="School Supplies" class="category-image">
+            <div class="category-label">School Supplies</div>
+        </a>
+    </div>
+</div>
+    
+    <h2 class="section-heading">Popular Books</h2>
+    <div class="product-section">
+        <div class="product-grid">
+            <div class="product-card" data-product-id="book1" data-product-name="The Adventures of Tom Sawyer" data-product-price="250.00" data-product-image="https://via.placeholder.com/150/FF0000/FFFFFF?text=Tom+Sawyer">
+                <img src="https://via.placeholder.com/150/FF0000/FFFFFF?text=Tom+Sawyer" alt="Tom Sawyer">
+                <h3>The Adventures of Tom Sawyer</h3>
+                <p>₱250.00</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card" data-product-id="book2" data-product-name="Alice's Adventures in Wonderland" data-product-price="300.00" data-product-image="https://via.placeholder.com/150/0000FF/FFFFFF?text=Alice">
+                <img src="https://via.placeholder.com/150/0000FF/FFFFFF?text=Alice" alt="Alice in Wonderland">
+                <h3>Alice's Adventures in Wonderland</h3>
+                <p>₱300.00</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+            <div class="product-card" data-product-id="book3" data-product-name="The Secret Garden" data-product-price="280.00" data-product-image="https://via.placeholder.com/150/00FF00/FFFFFF?text=Garden">
+                <img src="https://via.placeholder.com/150/00FF00/FFFFFF?text=Garden" alt="Secret Garden">
+                <h3>The Secret Garden</h3>
+                <p>₱280.00</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+             <div class="product-card" data-product-id="book4" data-product-name="Harry Potter and the Sorcerer's Stone" data-product-price="550.00" data-product-image="https://via.placeholder.com/150/800080/FFFFFF?text=HP">
+                <img src="https://via.placeholder.com/150/800080/FFFFFF?text=HP" alt="Harry Potter">
+                <h3>Harry Potter and the Sorcerer's Stone</h3>
+                <p>₱550.00</p>
+                <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    <div class="featured-author">
+        <div class="author-image">
+            <img src="img/author.png" alt="Cornelia Funke">
+        </div>
+        <div class="author-details">
+            <h3>Featured Author</h3>
+            <h4>Cornelia Funke</h4>
+            <p>Cornelia Funke is the New York Times bestselling author of many magical novels for children, including The Thief Lord, Dragon Rider, and Inkheart. She is also the writer of the charming chapter books Emma and the Blue Genie, The Pirate pig, and Ruffleclaw. Once named one of the 100 most influential people by Time magazine, Cornelia was born in Germany and lives with her family in California.</p>
+            <p>Source: https://corneliafunke.com/</p>
+            <a href="https://corneliafunke.com/">FIND OUT MORE</a>
+        </div>
+    </div>
+    
+    <div class="services">
+        <div class="service">
+            <div class="service-icon"><img src="img/freeship.png" alt="Truck Icon" height="120" width="130"></div>
+            <div class="service-details">
+                <h4>FREE SHIPPING</h4>
+                <p>Shop Php 899 and above to get your order delivered for free! </p>
+            </div>
+        </div>
+        <div class="service">
+            <div class="service-icon"><img src="img/discount.png" alt="Discount Tag Icon" height="120" width="120"></div>
+            <div class="service-details">
+                <h4>DISCOUNT</h4>
+                <p>Enjoy additional 5% off on D-Coded items.</p>
+            </div>
+        </div>
+        <div class="service">
+            <div class="service-icon"><img src="img/cod.png" alt="Credit Card Icon" height="120" width="120"></div>
+            <div class="service-details">
+                <h4>CASH ON DELIVERY</h4>
+                <p>Cash on delivery available for orders worth Php 899 and above.</p>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="newsletter">
+        <p>Sign up to recieve email updates</p>
+        <input type="email" placeholder="Enter your email address">
+        <button>SEND</button>
+    </div>
+    
+ 
+<footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="img/quill-quest-logo-white.png" alt="Quill Quest Logo">
+                    QUILL QUEST
+                </div>
+                <div class="footer-contact">
+                    <p>quillquestinfo@gmail.com</p>
+                    <p>(+00)123-456-789</p>
+                    <p>LOCATION</p>
+                </div>
+                <div class="social-media">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">i</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>SERVICES</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">TERMS & AGREEMENT</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>PAYMENT METHODS</h4>
+                <ul>
+                    <li>Cash On Delivery</li>
+                    <li>Credit/Debit Cards</li>
+                    <li>Digital Wallets (Gcash, Paymaya)</li>
+                    <li>Online Banking</li>
+                </ul>
+                <div class="payment-icons">
+                    <div class="payment-icon">COD</div>
+                    <div class="payment-icon">💳</div>
+                    <div class="payment-icon">GC</div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">QUILL QUEST BOOKSTORE © COPYRIGHT 2025</div>
+    </footer>
+    
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeSignupModal">&times;</span>
+            <h2>Sign Up</h2>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="signup-name">Name</label>
+                    <input type="text" id="signup-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" required>
+                </div>
+                <button type="submit" class="modal-btn">SIGN UP</button>
+            </form>
+            <div class="modal-footer">
+                Already Registered? <a href="#" id="showLoginFromSignup">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeLoginModal">&times;</span>
+            <h2>Log In</h2>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="login-email">NAME/EMAIL</label>
+                    <input type="text" id="login-email" name="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">PASSWORD</label>
+                    <input type="password" id="login-password" name="login-password" required>
+                </div>
+                <button type="submit" class="modal-btn">LOG IN</button>
+            </form>
+            <div class="modal-footer">
+                New User? <a href="#" id="showSignupFromLogin">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeCartModal">&times;</span>
+            <h2>Your Cart</h2>
+            <ul id="cart-items-list">
+                <p id="empty-cart-message">Your cart is empty.</p>
+            </ul>
+            <div id="cart-total">Total: ₱0.00</div>
+            <button id="checkout-btn" class="modal-btn">PROCEED TO CHECKOUT</button>
+        </div>
+    </div>
+
+    <div class="chat-icon">
+        💬
+    </div>
+
+    <script>
+        // Get the modals
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+        const cartModal = document.getElementById('cartModal'); // New: Cart Modal
+
+        // Get the links that open the modals
+        const loginRegisterLink = document.getElementById('login-register-link');
+        const showLoginFromSignup = document.getElementById('showLoginFromSignup');
+        const showSignupFromLogin = document.getElementById('showSignupFromLogin');
+        const cartIconLink = document.getElementById('cart-icon-link'); // New: Cart Icon Link
+
+        // Get the <span> elements that close the modals
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeCartModal = document.getElementById('closeCartModal'); // New: Close Cart Modal
+
+        // Get cart elements
+        const cartItemCountSpan = document.getElementById('cart-item-count');
+        const cartItemsList = document.getElementById('cart-items-list');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartTotalDisplay = document.getElementById('cart-total');
+
+        // Initialize cart (using an array for simplicity, use localStorage for persistence)
+        let cart = []; // Stores objects like {id, name, price, image, quantity}
+
+        // Function to update cart display
+        function updateCartDisplay() {
+            cartItemsList.innerHTML = ''; // Clear current items
+            let total = 0;
+
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                cartItemCountSpan.style.display = 'none'; // Hide badge if empty
+            } else {
+                emptyCartMessage.style.display = 'none';
+                cart.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <div class="item-info">
+                            <img src="${item.image}" alt="${item.name}">
+                            <span class="item-name">${item.name} (x${item.quantity})</span>
+                        </div>
+                        <span class="item-price">₱${(item.price * item.quantity).toFixed(2)}</span>
+                    `;
+                    cartItemsList.appendChild(listItem);
+                    total += item.price * item.quantity;
+                });
+                cartItemCountSpan.style.display = 'inline-block'; // Show badge
+            }
+
+            cartItemCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0); // Update total count
+            cartTotalDisplay.textContent = `Total: ₱${total.toFixed(2)}`;
+        }
+
+        // Load cart from localStorage on page load (if you want persistence)
+        // This is commented out. Uncomment if you implement persistence.
+        /*
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedCart = localStorage.getItem('quillQuestCart');
+            if (storedCart) {
+                cart = JSON.parse(storedCart);
+                updateCartDisplay();
+            }
+        });
+        */
+
+        // Event listener for "Add to Cart" buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productCard = this.closest('.product-card');
+                const productId = productCard.dataset.productId;
+                const productName = productCard.dataset.productName;
+                const productPrice = parseFloat(productCard.dataset.productPrice);
+                const productImage = productCard.dataset.productImage;
+
+                const existingItem = cart.find(item => item.id === productId);
+
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        image: productImage,
+                        quantity: 1
+                    });
+                }
+
+                // Optional: Save cart to localStorage (uncomment if you want persistence)
+                // localStorage.setItem('quillQuestCart', JSON.stringify(cart));
+                
+                updateCartDisplay();
+                alert(`${productName} added to cart!`); // Simple confirmation
+                console.log('Current Cart:', cart); // For debugging
+            });
+        });
+
+
+        // --- Modal Event Handlers (Existing and New for Cart) ---
+
+        loginRegisterLink.onclick = function() {
+            signupModal.style.display = 'flex';
+        }
+
+        showLoginFromSignup.onclick = function(event) {
+            event.preventDefault(); 
+            signupModal.style.display = 'none';
+            loginModal.style.display = 'flex';
+        }
+
+        showSignupFromLogin.onclick = function(event) {
+            event.preventDefault(); 
+            loginModal.style.display = 'none';
+            signupModal.style.display = 'flex';
+        }
+
+        closeSignupModal.onclick = function() {
+            signupModal.style.display = 'none';
+        }
+
+        closeLoginModal.onclick = function() {
+            loginModal.style.display = 'none';
+        }
+
+        // New: Close Cart Modal
+        closeCartModal.onclick = function() {
+            cartModal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == signupModal) {
+                signupModal.style.display = 'none';
+            }
+            if (event.target == loginModal) {
+                loginModal.style.display = 'none';
+            }
+            if (event.target == cartModal) { // New: Close cart modal on outside click
+                cartModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

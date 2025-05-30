@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Books - Quill Quest Bookstore</title>
+    <style>
+        /* General styles (unchanged from previous response) */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fff;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #b99e66;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .logo img {
+            height: 75px;
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            width: 250px;
+            outline: none;
+        }
+
+        .search-icon {
+            margin-left: -30px;
+            color: #999;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .user-actions a {
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            padding: 10px 10px;
+        }
+        .main-navigation {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            padding: 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .main-navigation ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-navigation li {
+            position: relative;
+        }
+
+        .main-navigation a {
+            display: block;
+            padding: 15px 25px;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .main-navigation a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-indicator::after {
+            content: "▼";
+            font-size: 8px;
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+            text-transform: none;
+            font-weight: normal;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .main-navigation li:hover .dropdown-content {
+            display: block;
+        }
+
+        .banner {
+            position: relative;
+            height: 200px;
+            background-image: url('img/educational-banner.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .banner-title {
+            color: white;
+            font-size: 42px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding-right: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: flex-end;
+            padding: 15px 40px;
+            align-items: center;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+
+        .filter-item label {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        .filter-item select {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 20px 40px;
+        }
+
+        .book-card {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .book-image {
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .book-image img {
+            max-height: 180px;
+            max-width: 100%;
+        }
+
+        .book-category {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .book-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .book-author {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .book-price {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .wishlist-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .bestseller-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff4545;
+            color: white;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+            align-items: center;
+        }
+
+        .pagination a {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid #e0e0e0;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .pagination a.active {
+            background-color: #000;
+            color: white;
+            border-color: #000;
+        }
+
+        .pagination .prev-next {
+            font-size: 18px;
+        }
+
+        .services {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 40px;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        .service {
+            text-align: center;
+            flex: 1;
+            padding: 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-icon {
+            font-size: 30px;
+            color: #333;
+        }
+
+        .service-details {
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .service-details h4 {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .newsletter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 15px;
+        }
+
+        .newsletter p {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .newsletter input {
+            padding: 8px 15px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+
+        .newsletter button {
+            background-color: #b99e66;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #29200d;
+            color: white;
+            padding: 40px 50px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-info {
+            flex-basis: 30%; /* Adjust as needed */
+        }
+
+        .footer-logo {
+            color: #b99e66;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .footer-contact {
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            flex-basis: 20%; /* Adjust as needed */
+        }
+
+        .footer-links h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            font-size: 12px;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links .payment-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .footer-links .payment-icon {
+            background: white;
+            border-radius: 3px;
+            padding: 3px;
+            width: 30px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            color: #333;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .copyright {
+            font-size: 12px;
+            margin-top: 20px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 999; /* Ensure it's above other content */
+        }
+
+        /* Modal Styles (adjusted for your image) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe; /* White background */
+            padding: 40px;
+            border: none;
+            width: 400px;
+            border-radius: 8px; /* Slight roundness as seen in image */
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Keep shadow for depth */
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+        }
+
+        .modal h2 {
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #333; /* Darker text for headings */
+            text-transform: uppercase; /* Match image for "Log In" */
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333; /* Dark text for labels */
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc; /* Lighter border for inputs */
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            color: #333; /* Input text color */
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #b99e66; /* Match your brand color for focus */
+        }
+
+        .modal-btn {
+            background-color: #000; /* Black button */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .modal-btn:hover {
+            background-color: #333;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            color: #666;
+            /* Hide the footer for the login modal as per your image */
+            display: none; 
+        }
+
+        /* Specific styles for the login modal to precisely match the image */
+        #loginModal .modal-content {
+            padding: 40px; /* Adjust padding if needed to match image more closely */
+        }
+
+        #loginModal .modal-footer {
+            display: none; /* Explicitly hide the footer for the login modal */
+        }
+
+        #loginModal h2 {
+            font-size: 28px; /* Slightly smaller than signup modal, closer to image */
+            margin-bottom: 25px; /* Adjust spacing as in image */
+            text-transform: none; /* "Log In" is not uppercase in your image */
+        }
+
+        #loginModal .form-group label {
+            margin-bottom: 5px; /* Tighter spacing for labels in login modal */
+        }
+
+        #loginModal .form-group input {
+            padding: 10px; /* Slightly less padding for inputs in login modal */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="img/logo.png" alt="Quill Quest Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+        <div class="user-actions">
+            <a href="#" id="login-register-link">LOG IN/REGISTER</a>
+            <a href="#">HELP</a>
+            <a href="#">👤</a>
+            <a href="#">❤️</a>
+            <a href="#">🛒</a>
+        </div>
+    </header>
+
+    <nav class="main-navigation">
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li>
+                <a href="#" class="dropdown-indicator">BOOKS</a>
+                <div class="dropdown-content">
+                    <a href="sraz.html">EDUCATIONAL BOOKS</a>
+                    <a href="ficbook.html">FICTIONAL BOOKS</a>
+                    <a href="REFERENCE BOOKS.html">REFERENCE BOOKS</a>
+                </div>
+            </li>
+            <li>
+                <a href="#" class="dropdown-indicator">SUPPLIES</a>
+                <div class="dropdown-content">
+                    <a href="arts and craft.html">ARTS AND CRAFTS</a>
+                    <a href="pens.html">PENS</a>
+                    <a href="coloring.html">COLORING MATERIALS</a>
+                    <a href="written.html">WRITTEN MATERIALS</a>
+                </div>
+            </li>
+            <li><a href="blogs.html">BLOG</a></li>
+            <li><a href="about.html">ABOUT US</a></li>
+        </ul>
+    </nav>
+
+    <div class="banner">
+        <img src="img\educational.png" alt="Children reading books" height="200" width="1691">
+    </div>
+
+    <div class="filter-section">
+        <div class="filter-item">
+            <label>PRICE</label>
+            <select>
+                <option>All</option>
+                <option>Under ₱500</option>
+                <option>₱500 - ₱1000</option>
+                <option>Above ₱1000</option>
+            </select>
+            <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="filter-item">
+            <label>SORT BY</label>
+            <select>
+                <option>Featured</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Name: A to Z</option>
+            </select>
+            <span class="dropdown-arrow">▼</span>
+        </div>
+    </div>
+
+    <div class="book-grid">
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/unlocking-brilliance.jpg" alt="Unlocking Brilliance">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">Unlocking Brilliance</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 699.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/embraced-learning.jpg" alt="Embraced Learning">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">Embraced Learning</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 572.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="bestseller-badge">BEST SELLER</div>
+            <div class="book-image">
+                <img src="img/educating-for-learning.jpg" alt="Educating for Learning">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">Educating for Learning</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 1,063.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/educators-path.jpg" alt="The Educator's Path">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">The Educator's Path</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 559.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/chemistry-mastery.jpg" alt="Chemistry Mastery">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">Chemistry Mastery</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 728.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/elements-of-science.jpg" alt="Elements of Science">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">Elements of Science</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 683.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/learning-journey.jpg" alt="Learning Journey">
+            </div>
+            <div class="book-category">Educational • Preschool</div>
+            <div class="book-title">Learning Journey</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 499.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/plants.jpg" alt="Plants">
+            </div>
+            <div class="book-category">Educational • Preschool</div>
+            <div class="book-title">Plants</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 399.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+
+        <div class="book-card">
+            <div class="wishlist-icon">🤍</div>
+            <div class="book-image">
+                <img src="img/insects.jpg" alt="Insects">
+            </div>
+            <div class="book-category">Educational • Science</div>
+            <div class="book-title">Insects</div>
+            <div class="book-author">By Tara Wilkinson</div>
+            <div class="book-price">₱ 399.00</div>
+            <button class="add-to-cart-btn">ADD TO CART</button>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <a href="#" class="prev-next">«</a>
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#" class="prev-next">»</a>
+    </div>
+
+    <div class="services">
+        <div class="service">
+            <div class="service-icon"><img src="img\freeship.png" alt="Truck Icon" height="120" width="130"></div>
+            <div class="service-details">
+                <h4>FREE SHIPPING</h4>
+                <p>Shop Php 899 and above to get your order delivered for free!</p>
+            </div>
+        </div>
+        <div class="service">
+            <div class="service-icon"><img src="img\discount.png" alt="Discount Tag Icon" height="120" width="120"></div>
+            <div class="service-details">
+                <h4>DISCOUNT</h4>
+                <p>Enjoy additional 5% off on D-Coded items.</p>
+            </div>
+        </div>
+        <div class="service">
+            <div class="service-icon"><img src="img\cod.png" alt="Credit Card Icon" height="120" width="120"></div>
+            <div class="service-details">
+                <h4>CASH ON DELIVERY</h4>
+                <p>Cash on delivery available for orders worth Php 899 and above.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="newsletter">
+        <p>Sign up to receive email updates</p>
+        <input type="email" placeholder="Enter your email address">
+        <button>SEND</button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="img/quill-quest-logo-white.png" alt="Quill Quest Logo">
+                    QUILL QUEST
+                </div>
+                <div class="footer-contact">
+                    <p>quillquestinfo@gmail.com</p>
+                    <p>(+00)123-456-789</p>
+                    <p>LOCATION</p>
+                </div>
+                <div class="social-media">
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">t</a>
+                    <a href="#" class="social-icon">i</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>SERVICES</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">TERMS & AGREEMENT</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>PAYMENT METHODS</h4>
+                <ul>
+                    <li>Cash On Delivery</li>
+                    <li>Credit/Debit Cards</li>
+                    <li>Digital Wallets (Gcash, Paymaya)</li>
+                    <li>Online Banking</li>
+                </ul>
+                <div class="payment-icons">
+                    <div class="payment-icon">COD</div>
+                    <div class="payment-icon">💳</div>
+                    <div class="payment-icon">GC</div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">QUILL QUEST BOOKSTORE © COPYRIGHT 2025</div>
+    </footer>
+
+    <div class="chat-icon">
+        💬
+    </div>
+
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="signupModal">&times;</span>
+            <h2>Sign Up</h2>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="signup-name">NAME</label>
+                    <input type="text" id="signup-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">EMAIL</label>
+                    <input type="email" id="signup-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">PASSWORD</label>
+                    <input type="password" id="signup-password" name="password" required>
+                </div>
+                <button type="submit" class="modal-btn">SIGN UP</button>
+            </form>
+            <div class="modal-footer">
+                <span>Already Registered? <a href="#" id="login-redirect">Login</a></span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Log In</h2>
+            <form class="modal-form">
+                <div class="form-group">
+                    <label for="login-email">NAME/EMAIL</label>
+                    <input type="text" id="login-email" name="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">PASSWORD</label>
+                    <input type="password" id="login-password" name="login-password" required>
+                </div>
+                <button type="submit" class="modal-btn">LOG IN</button>
+            </form>
+            </div>
+    </div>
+
+    <script>
+        // Wishlist functionality (unchanged)
+        const wishlistIcons = document.querySelectorAll('.wishlist-icon');
+        wishlistIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                if (this.textContent === '🤍') {
+                    this.textContent = '❤️';
+                } else {
+                    this.textContent = '🤍';
+                }
+            });
+        });
+
+        // Add to cart functionality (unchanged)
+        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Item added to cart!');
+            });
+        });
+
+        // Modal functionality (adjusted)
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+        const loginRegisterLink = document.getElementById('login-register-link');
+        // Select all close buttons, as signup modal still has one
+        const closeButtons = document.querySelectorAll('.modal .close'); 
+        const loginRedirectLink = document.getElementById('login-redirect');
+        // Removed signupRedirectLink as it's no longer in the login modal
+
+        function openModal(modalElement) {
+            modalElement.style.display = 'flex'; // Use flex to center content
+        }
+
+        function closeModal(modalElement) {
+            modalElement.style.display = 'none';
+        }
+
+        // Open signup modal when LOG IN/REGISTER is clicked
+        loginRegisterLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal(signupModal);
+        });
+
+        // Close modals when 'X' is clicked (only applies to signup modal now)
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const modalToClose = document.getElementById(this.dataset.modal);
+                closeModal(modalToClose);
+            });
+        });
+
+        // Close modals when clicking outside of them
+        window.addEventListener('click', function(e) {
+            if (e.target === signupModal) {
+                closeModal(signupModal);
+            }
+            if (e.target === loginModal) { // Still allow closing login by clicking outside
+                closeModal(loginModal);
+            }
+        });
+
+        // Switch from signup to login modal
+        loginRedirectLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeModal(signupModal);
+            openModal(loginModal);
+        });
+
+        // Removed the signup-redirect event listener since the link is gone from login modal
+
+        // Handle signup form submission (unchanged)
+        signupModal.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Sign up successful!');
+            closeModal(signupModal);
+        });
+
+        // Handle login form submission (unchanged)
+        loginModal.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login successful!');
+            closeModal(loginModal);
+        });
+    </script>
+</body>
+</html>
